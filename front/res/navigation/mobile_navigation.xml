@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_main">
+
+    <!-- 메인 -->
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="hanium.mobile.did_student.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" />
+
+    <!-- 개인정보수정 -->
+    <fragment
+        android:id="@+id/nav_mypage_edit"
+        android:name="hanium.mobile.did_student.ui.mypage.EditInfoFragment"
+        android:label="@string/menu_mypage_edit"
+        tools:layout="@layout/fragment_mypage_edit" >
+
+        <action android:id="@+id/action_mypage_to_password"
+            app:destination="@id/nav_mypage_edit_check_password"/>
+        <action android:id="@+id/action_mypage_to_password_withdraw"
+            app:destination="@id/nav_mypage_edit_check_password_withdraw"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_check_password"
+        android:name="hanium.mobile.did_student.ui.mypage.CheckPasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_check_password_to_change_password"
+            app:destination="@id/nav_mypage_edit_change_password"/>
+        <action android:id="@+id/action_check_password_wrong"
+            app:destination="@id/nav_mypage_edit_check_password"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_change_password"
+        android:name="hanium.mobile.did_student.ui.mypage.ChangePasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_change_password_to_check_password"
+            app:destination="@id/nav_mypage_edit_check_change_password"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_check_change_password"
+        android:name="hanium.mobile.did_student.ui.mypage.CheckChangePasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_check_change_password_to_success_change_password"
+            app:destination="@id/nav_mypage_edit_success_change_password"/>
+        <action android:id="@+id/action_check_change_password_wrong"
+            app:destination="@id/nav_mypage_edit_change_password"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_success_change_password"
+        android:name="hanium.mobile.did_student.ui.mypage.SuccessChangePasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_mypage_password_change" >
+
+        <action android:id="@+id/action_success_change_password_to_main"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_check_password_withdraw"
+        android:name="hanium.mobile.did_student.ui.mypage.CheckPasswordFragment"
+        android:label="@string/withdraw_check"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_check_password_to_withdraw"
+            app:destination="@id/nav_mypage_withdraw"/>
+        <action android:id="@+id/action_check_password_withdraw_wrong"
+            app:destination="@id/nav_mypage_edit_check_password_withdraw"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_withdraw"
+        android:name="hanium.mobile.did_student.ui.mypage.WithdrawFragment"
+        android:label="@string/withdraw_service"
+        tools:layout="@layout/fragment_mypage_withdraw" >
+
+        <action android:id="@+id/action_withdraw_to_join"
+            app:destination="@id/nav_join_email"/>
+    </fragment>
+
+    <!-- 출석체크 -->
+    <fragment
+        android:id="@+id/nav_attendance_check"
+        android:name="hanium.mobile.did_student.ui.attendance.CheckAttendanceFragment"
+        android:label="@string/menu_attendance_check"
+        tools:layout="@layout/fragment_attendance_check" />
+
+    <!-- 출석조회 -->
+    <fragment
+        android:id="@+id/nav_attendance_inquiry"
+        android:name="hanium.mobile.did_student.ui.attendance.InquiryAttendanceFragment"
+        android:label="@string/menu_attendance_inquiry"
+        tools:layout="@layout/fragment_attendance_inquiry" />
+
+    <!-- 공지사항 -->
+    <fragment
+        android:id="@+id/nav_notice_notice"
+        android:name="hanium.mobile.did_student.ui.notice.NoticeFragment"
+        android:label="@string/menu_notice_notice"
+        tools:layout="@layout/fragment_notice" >
+
+        <action android:id="@+id/action_notice_to_detail"
+            app:destination="@id/nav_notice_notice_detail"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_notice_notice_detail"
+        android:name="hanium.mobile.did_student.ui.notice.NoticeDetailFragment"
+        android:label="@string/menu_notice_notice"
+        tools:layout="@layout/fragment_notice_detail" />
+
+    <!-- 개발자소개 -->
+    <fragment
+        android:id="@+id/nav_notice_developer"
+        android:name="hanium.mobile.did_student.ui.notice.DeveloperFragment"
+        android:label="@string/menu_notice_developer"
+        tools:layout="@layout/fragment_developer" />
+
+    <!-- 로그인 -->
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="hanium.mobile.did_student.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_login_success"
+            app:destination="@id/nav_main"/>
+        <action android:id="@+id/action_login_fail"
+            app:destination="@id/nav_login"/>
+    </fragment>
+
+    <!-- 가입 -->
+    <fragment
+        android:id="@+id/nav_join_email"
+        android:name="hanium.mobile.did_student.ui.join.EmailFragment"
+        android:label="@string/join_service"
+        tools:layout="@layout/fragment_join_email" >
+
+        <action android:id="@+id/action_nav_join_to_nav_join_password"
+            app:destination="@id/nav_join_password"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_join_password"
+        android:name="hanium.mobile.did_student.ui.join.PasswordFragment"
+        android:label="@string/join_service"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_nav_join_password_to_nav_join_password_check"
+            app:destination="@id/nav_join_password_check"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_join_password_check"
+        android:name="hanium.mobile.did_student.ui.join.CheckPasswordFragment"
+        android:label="@string/join_service"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_nav_join_password_check_to_nav_join_name"
+            app:destination="@id/nav_join_name"/>
+        <action android:id="@+id/action_nav_join_password_check_wrong"
+            app:destination="@id/nav_join_password"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_join_name"
+        android:name="hanium.mobile.did_student.ui.join.NameFragment"
+        android:label="@string/join_service"
+        tools:layout="@layout/fragment_join_name" >
+
+        <action android:id="@+id/action_nav_join_name_to_nav_login"
+            app:destination="@id/nav_login"/>
+    </fragment>
+
+</navigation>
