@@ -190,7 +190,17 @@
         android:label="@string/join_service"
         tools:layout="@layout/fragment_join_name" >
 
-        <action android:id="@+id/action_nav_join_name_to_nav_login"
+        <action android:id="@+id/action_nav_join_name_to_nav_join_success"
+            app:destination="@id/nav_join_success"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_join_success"
+        android:name="hanium.mobile.did_student.ui.join.SuccessJoinFragment"
+        android:label="@string/join_service"
+        tools:layout="@layout/fragment_join_success" >
+
+        <action android:id="@+id/action_nav_join_success_to_nav_login"
             app:destination="@id/nav_login"/>
     </fragment>
 
