@@ -8,30 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import hanium.mobile.did_student.R;
-import hanium.mobile.did_student.ui.notice.DeveloperViewModel;
 
 public class CheckPasswordFragment extends Fragment {
 
-    private DeveloperViewModel developerViewModel;
-
     private TextView tvTitle;
-    private TextView etError;
 
     private View root;
 
     private StringBuffer password;
+    private StringBuffer input;
 
     private TextView tv1;
     private TextView tv2;
@@ -55,12 +47,12 @@ public class CheckPasswordFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        developerViewModel =
-                ViewModelProviders.of(this).get(DeveloperViewModel.class);
         root = inflater.inflate(R.layout.fragment_password, container, false);
 
         tvTitle = root.findViewById(R.id.text_password_title);
-        etError = root.findViewById(R.id.text_password_error);
+
+        //비밀번호 넘겨받음
+        input = (StringBuffer) getArguments().getSerializable("password");
 
         tvTitle.setText("비밀번호를 다시 입력해주십시오");
 
@@ -194,13 +186,6 @@ public class CheckPasswordFragment extends Fragment {
             }
         });
 
-        // final TextView textView = root.findViewById(R.id.text_tools);
-        developerViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 
@@ -222,13 +207,17 @@ public class CheckPasswordFragment extends Fragment {
         }
         else if(password.length() == 6) {
             tv6.setText("*");
-            if (password.toString().equals("111111")) {
+
+            if(password.toString().equals(input.toString())){
                 //비밀번호 같으면
                 Navigation.findNavController(root).navigate(R.id.action_nav_join_password_check_to_nav_join_name);
             } else {
                 //비밀번호 다르면
-                Navigation.findNavController(root).navigate(R.id.action_nav_join_password_check_wrong);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("error", true);
+                Navigation.findNavController(root).navigate(R.id.action_nav_join_password_check_wrong, bundle);
             }
+
         }
     }
 }

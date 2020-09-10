@@ -34,7 +34,8 @@
         <action android:id="@+id/action_check_password_to_change_password"
             app:destination="@id/nav_mypage_edit_change_password"/>
         <action android:id="@+id/action_check_password_wrong"
-            app:destination="@id/nav_mypage_edit_check_password"/>
+            app:destination="@id/nav_mypage_edit_check_password">
+        </action>
     </fragment>
 
     <fragment
@@ -44,7 +45,8 @@
         tools:layout="@layout/fragment_password" >
 
         <action android:id="@+id/action_change_password_to_check_password"
-            app:destination="@id/nav_mypage_edit_check_change_password"/>
+            app:destination="@id/nav_mypage_edit_check_change_password">
+        </action>
     </fragment>
 
     <fragment
@@ -56,7 +58,8 @@
         <action android:id="@+id/action_check_change_password_to_success_change_password"
             app:destination="@id/nav_mypage_edit_success_change_password"/>
         <action android:id="@+id/action_check_change_password_wrong"
-            app:destination="@id/nav_mypage_edit_change_password"/>
+            app:destination="@id/nav_mypage_edit_change_password">
+        </action>
     </fragment>
 
     <fragment
@@ -78,7 +81,8 @@
         <action android:id="@+id/action_check_password_to_withdraw"
             app:destination="@id/nav_mypage_withdraw"/>
         <action android:id="@+id/action_check_password_withdraw_wrong"
-            app:destination="@id/nav_mypage_edit_check_password_withdraw"/>
+            app:destination="@id/nav_mypage_edit_check_password_withdraw">
+        </action>
     </fragment>
 
     <fragment
@@ -139,7 +143,8 @@
         <action android:id="@+id/action_login_success"
             app:destination="@id/nav_main"/>
         <action android:id="@+id/action_login_fail"
-            app:destination="@id/nav_login"/>
+            app:destination="@id/nav_login">
+        </action>
     </fragment>
 
     <!-- 가입 -->
@@ -160,7 +165,9 @@
         tools:layout="@layout/fragment_password" >
 
         <action android:id="@+id/action_nav_join_password_to_nav_join_password_check"
-            app:destination="@id/nav_join_password_check"/>
+            app:destination="@id/nav_join_password_check">
+        </action>
+
     </fragment>
 
     <fragment
@@ -172,7 +179,9 @@
         <action android:id="@+id/action_nav_join_password_check_to_nav_join_name"
             app:destination="@id/nav_join_name"/>
         <action android:id="@+id/action_nav_join_password_check_wrong"
-            app:destination="@id/nav_join_password"/>
+            app:destination="@id/nav_join_password">
+        </action>
+
     </fragment>
 
     <fragment

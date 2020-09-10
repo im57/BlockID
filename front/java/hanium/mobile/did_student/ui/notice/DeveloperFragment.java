@@ -24,8 +24,6 @@ import hanium.mobile.did_student.R;
 
 public class DeveloperFragment extends Fragment {
 
-    private DeveloperViewModel developerViewModel;
-
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
 
@@ -35,8 +33,6 @@ public class DeveloperFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        developerViewModel =
-                ViewModelProviders.of(this).get(DeveloperViewModel.class);
         root = inflater.inflate(R.layout.fragment_developer, container, false);
 
         recyclerView = root.findViewById(R.id.recycler_developer);
@@ -51,13 +47,6 @@ public class DeveloperFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        // final TextView textView = root.findViewById(R.id.text_tools);
-        developerViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 }

@@ -9,21 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import hanium.mobile.did_student.R;
-import hanium.mobile.did_student.ui.notice.DeveloperViewModel;
 
 public class PasswordFragment extends Fragment {
-
-    private DeveloperViewModel developerViewModel;
 
     private TextView tvTitle;
     private TextView etError;
@@ -52,10 +45,10 @@ public class PasswordFragment extends Fragment {
     private Button btnBack;
     private Button btnClear;
 
+    private Boolean error;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        developerViewModel =
-                ViewModelProviders.of(this).get(DeveloperViewModel.class);
         root = inflater.inflate(R.layout.fragment_password, container, false);
 
         tvTitle = root.findViewById(R.id.text_password_title);
@@ -86,7 +79,14 @@ public class PasswordFragment extends Fragment {
         password = new StringBuffer();
 
         //비밀번호 달라서 다시 입력 필요 (체크화면에서 다시 돌아옴)
-        //etError.setText("비밀번호가 불일치합니다");
+        if(getArguments() != null){
+            error = getArguments().getBoolean("error");
+            Log.d("error", error.toString());
+
+            if(error){
+                etError.setText("비밀번호가 불일치합니다.");
+            }
+        }
 
         btn0.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -196,14 +196,6 @@ public class PasswordFragment extends Fragment {
             }
         });
 
-
-        // final TextView textView = root.findViewById(R.id.text_tools);
-        developerViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 
@@ -225,9 +217,11 @@ public class PasswordFragment extends Fragment {
         }
         else if(password.length() == 6){
             tv6.setText("*");
-            Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_password_check);
 
             //비밀번호 전달
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("password", password);
+            Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_password_check, bundle);
         }
     }
 }

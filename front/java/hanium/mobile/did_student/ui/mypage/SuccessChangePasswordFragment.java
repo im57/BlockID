@@ -19,16 +19,12 @@ import hanium.mobile.did_student.R;
 
 public class SuccessChangePasswordFragment extends Fragment {
 
-    private EditInfoViewModel editInfoViewModel;
-
     private View root;
 
     private Button button;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        editInfoViewModel =
-                ViewModelProviders.of(this).get(EditInfoViewModel.class);
         root = inflater.inflate(R.layout.fragment_mypage_password_change, container, false);
 
         button = root.findViewById(R.id.btn_change_password);
@@ -39,13 +35,6 @@ public class SuccessChangePasswordFragment extends Fragment {
             }
         });
 
-        //final TextView textView = root.findViewById(R.id.text_gallery);
-        editInfoViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 }

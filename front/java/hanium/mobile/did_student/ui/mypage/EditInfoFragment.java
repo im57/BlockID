@@ -30,8 +30,6 @@ import hanium.mobile.did_student.R;
 
 public class EditInfoFragment extends Fragment {
 
-    private EditInfoViewModel editInfoViewModel;
-
     private ArrayAdapter<String> adapter;
     private ArrayList<String> list;
     private ListView lvMypage = null;
@@ -42,8 +40,6 @@ public class EditInfoFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        editInfoViewModel =
-                ViewModelProviders.of(this).get(EditInfoViewModel.class);
         root = inflater.inflate(R.layout.fragment_mypage_edit, container, false);
 
         lvMypage = root.findViewById(R.id.list_mypage);
@@ -56,10 +52,15 @@ public class EditInfoFragment extends Fragment {
         lvMypage.setAdapter(adapter);
 
         lvMypage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            Bundle bundle;
+
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                bundle = new Bundle();
+
                 if(position == 0) {
-                    Navigation.findNavController(view).navigate(R.id.action_mypage_to_password);
+                    bundle.putString("mypage", "edit");
+                    Navigation.findNavController(view).navigate(R.id.action_mypage_to_password, bundle);
                 } else if (position == 1) {
                     builder = new AlertDialog.Builder(getContext());
 
@@ -67,7 +68,8 @@ public class EditInfoFragment extends Fragment {
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Navigation.findNavController(view).navigate(R.id.action_mypage_to_password_withdraw);
+                                    bundle.putString("mypage", "withdraw");
+                                    Navigation.findNavController(view).navigate(R.id.action_mypage_to_password_withdraw, bundle);
                                 }
                             })
                             .setNegativeButton("취소", null)
@@ -76,13 +78,6 @@ public class EditInfoFragment extends Fragment {
             }
         });
 
-        //final TextView textView = root.findViewById(R.id.text_gallery);
-        editInfoViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 }

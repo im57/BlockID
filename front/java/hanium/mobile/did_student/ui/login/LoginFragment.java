@@ -8,22 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import hanium.mobile.did_student.R;
-import hanium.mobile.did_student.ui.notice.DeveloperViewModel;
 
 public class LoginFragment extends Fragment {
-
-    private DeveloperViewModel developerViewModel;
 
     private TextView tvTitle;
     private TextView etError;
@@ -52,18 +45,24 @@ public class LoginFragment extends Fragment {
     private Button btnBack;
     private Button btnClear;
 
+    private Boolean error;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        developerViewModel =
-                ViewModelProviders.of(this).get(DeveloperViewModel.class);
         root = inflater.inflate(R.layout.fragment_password, container, false);
 
         tvTitle = root.findViewById(R.id.text_password_title);
         etError = root.findViewById(R.id.text_password_error);
 
         //비밀번호 다르면
-        //etError.setText("비밀번호가 불일치합니다");
+        if(getArguments() != null){
+            error = getArguments().getBoolean("error");
+            Log.d("error", error.toString());
 
+            if(error){
+                etError.setText("비밀번호를 잘못 입력하였습니다.");
+            }
+        }
         tv1 = root.findViewById(R.id.text_password1);
         tv2 = root.findViewById(R.id.text_password2);
         tv3 = root.findViewById(R.id.text_password3);
@@ -87,9 +86,6 @@ public class LoginFragment extends Fragment {
         tvTitle.setText("비밀번호 6자리를 입력해주십시오");
 
         password = new StringBuffer();
-
-        //비밀번호 달라서 다시 입력 필요 (체크화면에서 다시 돌아옴)
-        //etError.setText("비밀번호가 불일치합니다");
 
         btn0.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -199,13 +195,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        // final TextView textView = root.findViewById(R.id.text_tools);
-        developerViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 
@@ -232,7 +221,9 @@ public class LoginFragment extends Fragment {
                 Navigation.findNavController(root).navigate(R.id.action_login_success);
             } else {
                 //비밀번호 다르면
-                Navigation.findNavController(root).navigate(R.id.action_login_fail);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("error", true);
+                Navigation.findNavController(root).navigate(R.id.action_login_fail, bundle);
             }
         }
     }

@@ -24,8 +24,6 @@ import hanium.mobile.did_student.R;
 
 public class NoticeFragment extends Fragment {
 
-    private NoticeViewModel noticeViewModel;
-
     Spinner spinner;
 
     ListView lvNotice = null;
@@ -39,8 +37,6 @@ public class NoticeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        noticeViewModel =
-                ViewModelProviders.of(this).get(NoticeViewModel.class);
         root = inflater.inflate(R.layout.fragment_notice, container, false);
 
         noticeList = new ArrayList<>();
@@ -84,14 +80,6 @@ public class NoticeFragment extends Fragment {
             }
         });
 
-
-    //    final TextView textView = root.findViewById(R.id.text_tools);
-        noticeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-     //           textView.setText(s);
-            }
-        });
         return root;
     }
 }

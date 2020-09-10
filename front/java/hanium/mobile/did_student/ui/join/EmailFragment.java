@@ -12,20 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
-import hanium.mobile.did_student.MainActivity;
 import hanium.mobile.did_student.R;
-import hanium.mobile.did_student.ui.mypage.CheckPasswordFragment;
-import hanium.mobile.did_student.ui.notice.DeveloperViewModel;
 
 public class EmailFragment extends Fragment {
-
-    private DeveloperViewModel developerViewModel;
 
     private EditText etSchool;
     private EditText etEmail;
@@ -39,8 +31,6 @@ public class EmailFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        developerViewModel =
-                ViewModelProviders.of(this).get(DeveloperViewModel.class);
         root = inflater.inflate(R.layout.fragment_join_email, container, false);
 
         etSchool = root.findViewById(R.id.edit_school);
@@ -82,13 +72,6 @@ public class EmailFragment extends Fragment {
             }
         });
 
-        // final TextView textView = root.findViewById(R.id.text_tools);
-        developerViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 }

@@ -3,19 +3,13 @@
 package hanium.mobile.did_student.ui.mypage;
 
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.Log;
-=======
->>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-<<<<<<< HEAD
 import android.widget.Button;
-=======
->>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,14 +27,11 @@ import hanium.mobile.did_student.R;
 
 public class ChangePasswordFragment extends Fragment {
 
-    private EditInfoViewModel editInfoViewModel;
-
     private TextView tvTitle;
     private TextView etError;
 
     private View root;
 
-<<<<<<< HEAD
     private StringBuffer password;
 
     private TextView tv1;
@@ -63,18 +54,15 @@ public class ChangePasswordFragment extends Fragment {
     private Button btnBack;
     private Button btnClear;
 
-=======
->>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
+    private Boolean error;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        editInfoViewModel =
-                ViewModelProviders.of(this).get(EditInfoViewModel.class);
         root = inflater.inflate(R.layout.fragment_password, container, false);
 
         tvTitle = root.findViewById(R.id.text_password_title);
         etError = root.findViewById(R.id.text_password_error);
 
-<<<<<<< HEAD
         tv1 = root.findViewById(R.id.text_password1);
         tv2 = root.findViewById(R.id.text_password2);
         tv3 = root.findViewById(R.id.text_password3);
@@ -100,7 +88,14 @@ public class ChangePasswordFragment extends Fragment {
         password = new StringBuffer();
 
         //비밀번호 달라서 다시 입력 필요 (체크화면에서 다시 돌아옴)
-        //etError.setText("비밀번호가 불일치합니다");
+        if(getArguments() != null){
+            error = getArguments().getBoolean("error");
+            Log.d("error", error.toString());
+
+            if(error){
+                etError.setText("비밀번호가 불일치합니다.");
+            }
+        }
 
         btn0.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -209,25 +204,9 @@ public class ChangePasswordFragment extends Fragment {
                 tv6.setText("");
             }
         });
-=======
-        tvTitle.setText("변경할 비밀번호 6자리를 입력해주십시오");
 
-        //비밀번호 다르면 (돌아옴)
-        //etError.setText("비밀번호가 불일치합니다");
-
-        Navigation.findNavController(root).navigate(R.id.action_change_password_to_check_password);
->>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
-
-        //final TextView textView = root.findViewById(R.id.text_gallery);
-        editInfoViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
-<<<<<<< HEAD
 
     public void input() {
         if (password.length() == 1) {
@@ -243,11 +222,12 @@ public class ChangePasswordFragment extends Fragment {
         } else if (password.length() == 6) {
             tv6.setText("*");
 
-            Navigation.findNavController(root).navigate(R.id.action_change_password_to_check_password);
-
             //비밀번호 전달
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("password", password);
+
+            Navigation.findNavController(root).navigate(R.id.action_change_password_to_check_password, bundle);
+
         }
     }
-=======
->>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 }

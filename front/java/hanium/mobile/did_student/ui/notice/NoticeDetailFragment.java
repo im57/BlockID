@@ -24,8 +24,6 @@ import hanium.mobile.did_student.R;
 
 public class NoticeDetailFragment extends Fragment {
 
-    private NoticeViewModel noticeViewModel;
-
     private TextView tvTitle;
     private TextView tvDetail;
 
@@ -33,8 +31,6 @@ public class NoticeDetailFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        noticeViewModel =
-                ViewModelProviders.of(this).get(NoticeViewModel.class);
         root = inflater.inflate(R.layout.fragment_notice_detail, container, false);
 
         tvTitle = root.findViewById(R.id.text_notice_title);
@@ -43,13 +39,6 @@ public class NoticeDetailFragment extends Fragment {
         tvTitle.setText("버전1.0정보");
         tvDetail.setText("출석체크, 출석조회 가능");
 
-    //    final TextView textView = root.findViewById(R.id.text_tools);
-        noticeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-     //           textView.setText(s);
-            }
-        });
         return root;
     }
 }

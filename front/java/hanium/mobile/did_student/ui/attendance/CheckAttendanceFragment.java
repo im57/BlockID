@@ -30,8 +30,6 @@ import hanium.mobile.did_student.ui.mypage.CheckPasswordFragment;
 
 public class CheckAttendanceFragment extends Fragment {
 
-    private CheckAttendanceViewModel checkAttendanceViewModel;
-
     private IntentIntegrator qrScan;
 
     private AlertDialog.Builder builder;
@@ -40,17 +38,7 @@ public class CheckAttendanceFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        checkAttendanceViewModel =
-                ViewModelProviders.of(this).get(CheckAttendanceViewModel.class);
         root = inflater.inflate(R.layout.fragment_attendance_check, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        checkAttendanceViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
 
         //scan QR code
         qrScan = new IntentIntegrator(getActivity());

@@ -23,8 +23,6 @@ import hanium.mobile.did_student.R;
 
 public class InquiryAttendanceFragment extends Fragment {
 
-    private InquiryAttendanceViewModel inquiryAttendanceViewModel;
-
     private Spinner spinner;
 
     private ListView lvAttendance = null;
@@ -38,8 +36,6 @@ public class InquiryAttendanceFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        inquiryAttendanceViewModel =
-                ViewModelProviders.of(this).get(InquiryAttendanceViewModel.class);
         root = inflater.inflate(R.layout.fragment_attendance_inquiry, container, false);
 
         subjectList = new ArrayList<>();
@@ -79,13 +75,6 @@ public class InquiryAttendanceFragment extends Fragment {
             }
         });
 
-     //   final TextView textView = root.findViewById(R.id.text_slideshow);
-        inquiryAttendanceViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-       //         textView.setText(s);
-            }
-        });
         return root;
     }
 }

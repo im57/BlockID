@@ -24,16 +24,12 @@ import hanium.mobile.did_student.R;
 
 public class WithdrawFragment extends Fragment {
 
-    private EditInfoViewModel editInfoViewModel;
-
     private Button button;
 
     private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        editInfoViewModel =
-                ViewModelProviders.of(this).get(EditInfoViewModel.class);
         root = inflater.inflate(R.layout.fragment_mypage_withdraw, container, false);
 
         button = root.findViewById(R.id.btn_withdraw);
@@ -44,13 +40,6 @@ public class WithdrawFragment extends Fragment {
             }
         });
 
-        //final TextView textView = root.findViewById(R.id.text_gallery);
-        editInfoViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-        //        textView.setText(s);
-            }
-        });
         return root;
     }
 }
