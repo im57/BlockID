@@ -4,13 +4,19 @@
 package hanium.mobile.did_student.ui.mypage;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+<<<<<<< HEAD
 import android.widget.Button;
+=======
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +41,7 @@ public class CheckPasswordFragment extends Fragment {
 
     private View root;
 
+<<<<<<< HEAD
     private StringBuffer password;
 
     private TextView tv1;
@@ -57,6 +64,8 @@ public class CheckPasswordFragment extends Fragment {
     private Button btnBack;
     private Button btnClear;
 
+=======
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         editInfoViewModel =
@@ -66,6 +75,7 @@ public class CheckPasswordFragment extends Fragment {
         tvTitle = root.findViewById(R.id.text_password_title);
         etError = root.findViewById(R.id.text_password_error);
 
+<<<<<<< HEAD
         tv1 = root.findViewById(R.id.text_password1);
         tv2 = root.findViewById(R.id.text_password2);
         tv3 = root.findViewById(R.id.text_password3);
@@ -86,11 +96,14 @@ public class CheckPasswordFragment extends Fragment {
         btnBack = root.findViewById(R.id.btn_password_back);
         btnClear = root.findViewById(R.id.btn_password_clear);
 
+=======
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
         tvTitle.setText("비밀번호 6자리를 입력해주십시오");
 
         //비밀번호 달라서 다시 돌아옴
         //etError.setText("비밀번호가 불일치합니다");
 
+<<<<<<< HEAD
         password = new StringBuffer();
 
         //비밀번호 달라서 다시 입력 필요 (체크화면에서 다시 돌아옴)
@@ -203,6 +216,19 @@ public class CheckPasswordFragment extends Fragment {
                 tv6.setText("");
             }
         });
+=======
+        //비밀번호 불일치
+        //비밀번호 변경
+        Navigation.findNavController(root).navigate(R.id.action_check_password_wrong);
+        //탈퇴
+        Navigation.findNavController(root).navigate(R.id.action_check_password_withdraw_wrong);
+
+        //비밀번호 일치
+        //비밀번호 변경
+        Navigation.findNavController(root).navigate(R.id.action_mypage_to_password);
+        //탈퇴
+        Navigation.findNavController(root).navigate(R.id.action_mypage_to_password_withdraw);
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 
         //final TextView textView = root.findViewById(R.id.text_gallery);
         editInfoViewModel.getText().observe(this, new Observer<String>() {
@@ -213,6 +239,7 @@ public class CheckPasswordFragment extends Fragment {
         });
         return root;
     }
+<<<<<<< HEAD
 
     public void input(){
         if(password.length() == 1){
@@ -249,4 +276,6 @@ public class CheckPasswordFragment extends Fragment {
             }
         }
     }
+=======
+>>>>>>> c40703990e231760da9b0710a2c9b46260d0497d
 }
