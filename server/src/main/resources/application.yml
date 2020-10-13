@@ -1,0 +1,22 @@
+server:
+  port: 6464
+spring:
+  datasource:
+    url: jdbc:mariadb://ec2-13-124-158-247.ap-northeast-2.compute.amazonaws.com:3306/legoblock
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: lego
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: legoblockdid@gmail.com
+    password: legoblock123
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
