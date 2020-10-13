@@ -14,4 +14,5 @@ public class FetchIdcardResultVM {
     private LocalDateTime expireDate;
     private String department;
     private Long holder_id;
+    private String name;
 }
