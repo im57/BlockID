@@ -35,6 +35,7 @@ public class AttendanceService {
         newAttendance.setClass_id(request.getClass_id());
         newAttendance.setTime(LocalDateTime.now());
         newAttendance.setStatus(getAttendanceStatus(class_info.getStart_time(), class_info.getEnd_time()));
+        newAttendance.setVerifier_id(0L);
 
         Attendance addedAttendance = attendanceRepository.save(newAttendance);
 
