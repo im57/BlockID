@@ -1,20 +1,31 @@
 package kr.or.hanium.lego.controller;
 
+import kr.or.hanium.lego.service.AttendanceService;
+import kr.or.hanium.lego.vm.AddAttendanceVM;
 import kr.or.hanium.lego.vm.FetchAttendanceResultVM;
 import kr.or.hanium.lego.vm.FetchIdcardResultVM;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/attendance")
 public class AttendanceController {
-    @PostMapping("/qr/{class_id}")
-    public String addAttendance(@PathVariable Long class_id) {
-        return "자했다";
+    private final AttendanceService attendanceService;
+
+    @PostMapping("")
+    public Long addAttendance(@RequestBody AddAttendanceVM request) {
+        Long attendanceId = attendanceService.addAttendance(request);
+
+        return attendanceId;
     }
 
-    @GetMapping("/{class_id}/list")
-    public FetchAttendanceResultVM fetchAttendance(@PathVariable Long id){
-        return new FetchAttendanceResultVM();
+    @GetMapping("/list")
+    public List<FetchAttendanceResultVM> fetchAttendance(@RequestBody AddAttendanceVM request){
+        List<FetchAttendanceResultVM> attendanceVMList = attendanceService.fetchAttendanceList(request);
+        return attendanceVMList;
     }
 
 
