@@ -45,6 +45,7 @@ public class StudentIdCardService {
         idCardVM.setStatus(idCard.getStatus());
         idCardVM.setUniversity(idCard.getHolder().getUniversity());
         idCardVM.setHolder_id(idCard.getHolder_id());
+        idCardVM.setName(idCard.getHolder().getName());
 
         return idCardVM;
     }
