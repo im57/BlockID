@@ -9,7 +9,10 @@ import kr.or.hanium.lego.vm.SignupVM;
 import lombok.RequiredArgsConstructor;
 import org.bitcoinj.core.Base58;
 import org.springframework.stereotype.Service;
+
+import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class RegisterService {
         newHolder.setStudent_id(signupVM.getStudent_id());
         newHolder.setUniversity(signupVM.getUniversity());
         newHolder.setDepartment(signupVM.getDepartment());
-        newHolder.setHolder_did(createDID(signupVM.getName(), signupVM.getStudent_id()));
+        newHolder.setHolder_did(createDID());
 
         Holder savedHolder = holderRepository.save(newHolder);
 
@@ -35,7 +38,7 @@ public class RegisterService {
         StudentIdCard newStCard = new StudentIdCard();
         LocalDateTime today = LocalDateTime.now();
 
-        newStCard.setCard_did(createDID(signupVM.getUniversity(), signupVM.getStudent_id()));
+        newStCard.setCard_did(createDID());
         newStCard.setVerified_date(today);
         newStCard.setExpire_date(getExpireDate(today));
         newStCard.setStatus(CardStatus.ACTIVATED);
@@ -68,12 +71,21 @@ public class RegisterService {
        }
     }
 
-    private String createDID(String first, String second) {
-        byte[] idByte = (first + second).getBytes();
+    private String createDID() {
+        UUID uuid = UUID.randomUUID();
+        byte[] uuidByte = getBytesFromUUID(uuid);
 
         String did = "did:sov:";
-        did += Base58.encode(idByte);
+        did += Base58.encode(uuidByte);
 
         return did;
+    }
+
+    private byte[] getBytesFromUUID(UUID uuid) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+        bb.putLong(uuid.getMostSignificantBits());
+        bb.putLong(uuid.getLeastSignificantBits());
+
+        return bb.array();
     }
 }

@@ -12,4 +12,6 @@ public class Issuer {
     private Long id;
 
     private String name;
+
+    private String issuer_did;
 }

@@ -17,6 +17,8 @@ public class Attendance {
 
     private Long class_id;
 
+    private Long verifier_id;
+
     private LocalDateTime time;
 
     @Enumerated(EnumType.STRING)
@@ -25,4 +27,8 @@ public class Attendance {
     @ManyToOne
     @JoinColumn(name = "class_id", updatable = false, insertable = false, referencedColumnName = "id")
     private Class class_info;
+
+    @ManyToOne
+    @JoinColumn(name = "verifier_id", updatable = false, insertable = false)
+    private Verifier verifier;
 }

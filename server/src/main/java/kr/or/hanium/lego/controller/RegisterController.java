@@ -1,5 +1,6 @@
 package kr.or.hanium.lego.controller;
 
+import io.swagger.annotations.ApiOperation;
 import kr.or.hanium.lego.service.dto.MailDto;
 import kr.or.hanium.lego.service.EmailService;
 import kr.or.hanium.lego.service.RegisterService;
@@ -17,7 +18,7 @@ public class RegisterController {
     private final RegisterService registerService;
     private final EmailService emailService;
 
-    // 이메일 인증
+    @ApiOperation(value = "이메일 인증코드 보내기")
     @PostMapping("/email/send")
     public SendEmailResultVM sendEmail(@RequestBody SendEmailVM request){
         MailDto mailDto = emailService.createEmail(request.getEmail());
@@ -28,7 +29,7 @@ public class RegisterController {
         return sendEmailResultVM;
     }
 
-    // Holder 가입과 학생증 생성
+    @ApiOperation(value = "Holder 회원가입과 학생증 생성")
     @PostMapping("/signup")
     public Long signUp(@RequestBody SignupVM request){
         Long holderId = registerService.saveHolder(request);

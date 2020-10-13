@@ -22,9 +22,4 @@ public class Class {
 
     private LocalTime end_time;
 
-    private Long verifier_id;
-
-    @ManyToOne
-    @JoinColumn(name = "verifier_id", updatable = false, insertable = false)
-    private Verifier verifier;
 }
