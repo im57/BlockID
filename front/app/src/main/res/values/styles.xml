@@ -1,0 +1,64 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Some of your styles. -->
+        <item name="pf_key_button">@style/MyLockScreenButtonStyle</item>
+        <item name="pf_delete_button">@style/MyLockScreenDeleteButtonStyle</item>
+        <item name="pf_lock_screen">@style/MyLockScreenStyle</item>
+        <item name="pf_code_view">@style/MyLockScreenCodeStyle</item>
+        <item name="pf_title">@style/MyLockTitleStyle</item>
+        <item name="pf_hint">@style/MyLockHintStyle</item>
+        <item name="pf_next">@style/MyLockNextButtonStyle</item>
+
+    </style>
+
+    <style name="MyLockScreenStyle">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="MyLockScreenButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:background">@drawable/button_circle</item>
+    </style>
+
+    <style name="MyLockScreenDeleteButtonStyle">
+        <item name="android:src">@drawable/back</item>
+     <!--   <item name="android:src">@drawable/delete_lockscreen_pf</item> -->
+    </style>
+
+    <style name="MyLockScreenCodeStyle">
+        <item name="android:button">@drawable/code_selector</item>
+    </style>
+
+    <style name="MyLockNextButtonStyle">
+        <item name="android:textColor">@color/sub_color_gray_dark</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
+    <style name="MyLockTitleStyle">
+        <item name="android:textColor">@color/sub_color_gray_dark</item>
+    </style>
+
+    <style name="MyLockHintStyle">
+        <item name="android:textColor">@color/sub_color_gray_dark</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+        <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    </resources>

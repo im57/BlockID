@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_main">
+
+    <!-- 메인 -->
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="kr.or.hanium.lego.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" >
+
+        <action android:id="@+id/action_check_to_list"
+            app:destination="@id/nav_attendance_list"/>
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <!-- 개인정보수정 -->
+    <fragment
+        android:id="@+id/nav_mypage_edit"
+        android:name="kr.or.hanium.lego.ui.mypage.EditInfoFragment"
+        android:label="@string/menu_mypage_edit"
+        tools:layout="@layout/fragment_mypage_edit" >
+
+        <action android:id="@+id/action_mypage_to_password"
+            app:destination="@id/nav_mypage_edit_check_password"/>
+        <action android:id="@+id/action_mypage_to_password_withdraw"
+            app:destination="@id/nav_mypage_edit_check_password_withdraw"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_check_password"
+        android:name="kr.or.hanium.lego.ui.mypage.CheckPasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_to_mypage"
+            app:destination="@id/nav_mypage_edit"/>
+        <action android:id="@+id/action_check_password_to_change_password"
+            app:destination="@id/nav_mypage_edit_change_password"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_change_password"
+        android:name="kr.or.hanium.lego.ui.mypage.ChangePasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_to_mypage"
+            app:destination="@id/nav_mypage_edit"/>
+        <action android:id="@+id/action_change_password_to_success_change_password"
+            app:destination="@id/nav_mypage_edit_success_change_password">
+        </action>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_success_change_password"
+        android:name="kr.or.hanium.lego.ui.mypage.SuccessChangePasswordFragment"
+        android:label="@string/password_edit"
+        tools:layout="@layout/fragment_mypage_password_change" >
+
+        <action android:id="@+id/action_to_mypage"
+            app:destination="@id/nav_mypage_edit"/>
+        <action android:id="@+id/action_success_change_password_to_main"
+            app:destination="@id/nav_main"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_edit_check_password_withdraw"
+        android:name="kr.or.hanium.lego.ui.mypage.CheckPasswordFragment"
+        android:label="@string/withdraw_check"
+        tools:layout="@layout/fragment_password" >
+
+        <action android:id="@+id/action_to_mypage"
+            app:destination="@id/nav_mypage_edit"/>
+        <action android:id="@+id/action_check_password_to_withdraw"
+            app:destination="@id/nav_mypage_withdraw"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mypage_withdraw"
+        android:name="kr.or.hanium.lego.ui.mypage.WithdrawFragment"
+        android:label="@string/withdraw_service"
+        tools:layout="@layout/fragment_mypage_withdraw" >
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <!-- 출석체크 -->
+    <fragment
+        android:id="@+id/nav_attendance_check"
+        android:name="kr.or.hanium.lego.ui.attendance.CheckAttendanceFragment"
+        android:label="@string/menu_attendance_check"
+        tools:layout="@layout/fragment_attendance_check" >
+
+        <action android:id="@+id/action_check_to_list"
+            app:destination="@id/nav_attendance_list"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <!-- 출석조회 -->
+    <fragment
+        android:id="@+id/nav_attendance_list"
+        android:name="kr.or.hanium.lego.ui.attendance.ListAttendanceFragment"
+        android:label="@string/menu_attendance_list"
+        tools:layout="@layout/fragment_attendance_list" >
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <!-- 공지사항 -->
+    <fragment
+        android:id="@+id/nav_notice_notice"
+        android:name="kr.or.hanium.lego.ui.notice.NoticeFragment"
+        android:label="@string/menu_notice_notice"
+        tools:layout="@layout/fragment_notice" >
+
+        <action android:id="@+id/action_notice_to_detail"
+            app:destination="@id/nav_notice_notice_detail"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_notice_notice_detail"
+        android:name="kr.or.hanium.lego.ui.notice.NoticeDetailFragment"
+        android:label="@string/menu_notice_notice"
+        tools:layout="@layout/fragment_notice_detail" >
+
+        <action android:id="@+id/action_notice_detail_to_notice"
+            app:destination="@id/nav_notice_notice"/>
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+    <!-- 개발자소개 -->
+    <fragment
+        android:id="@+id/nav_notice_developer"
+        android:name="kr.or.hanium.lego.ui.notice.DeveloperFragment"
+        android:label="@string/menu_notice_developer"
+        tools:layout="@layout/fragment_developer" >
+
+        <action android:id="@+id/action_to_check"
+            app:destination="@id/nav_attendance_check"/>
+        <action android:id="@+id/action_go_home"
+            app:destination="@id/nav_main"/>
+    </fragment>
+
+</navigation>
