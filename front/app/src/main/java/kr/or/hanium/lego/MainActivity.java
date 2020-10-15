@@ -149,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
             //qrcode 가 없으면
             if (result.getContents() == null) {
                 Toast.makeText(this, "취소!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
             } else {
                 //qrcode 결과가 있으면
                 try {
@@ -156,21 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
-                    builder = new AlertDialog.Builder(this);
 
-                    idx = obj.getString("idx"); //나중에 삭제
+                    idx = obj.getString("idx");
 
                     surParsing();
 
-                    builder.setMessage("강의 번호 " + idx + "\n출석체크 완료")    //나중에 삭제
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("idx", idx);
-                                    navController.navigate(R.id.action_check_to_list, bundle);
-                                }
-                            }).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     String temp = result.getContents();
@@ -227,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject json = new JSONObject();
 
                 json.put("class_id", idx);
+                json.put("holder_id", "1");
 
                 body = json.toString();
             } catch (JSONException e) {
@@ -255,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             builder = new AlertDialog.Builder(MainActivity.this);
 
             builder.setMessage("강의 번호 " + idx + "\n출석체크 완료")
+                    .setCancelable(false)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

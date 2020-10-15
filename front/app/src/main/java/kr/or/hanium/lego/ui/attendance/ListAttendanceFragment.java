@@ -50,7 +50,8 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     private View root;
     private MainActivity activity;
 
-    private int idx;
+    private int idx =-1;
+    private String body;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,9 +61,10 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
         subjectList = new ArrayList<>();
         subjectList.add("수업을 선택해주세요");
-        subjectList.add("프로그래밍 논리의 이해");
-        subjectList.add("임베디드 시스템");
         subjectList.add("데이터베이스 프로그래밍");
+        subjectList.add("기초 독일어");
+        subjectList.add("프로그래밍 논리의 이해");
+
 
         attendances = new ArrayList<>();
 
@@ -73,9 +75,9 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         lvAttendance = root.findViewById(R.id.list_attendance);
         attendanceAdapter = new AttendanceAdapter(getActivity(), R.layout.listview_attendance, attendances);
 
-
         if(getArguments() != null){
-            idx = getArguments().getInt("idx");
+            idx = Integer.parseInt(getArguments().getString("idx"));
+
             if(idx != 0){
                 spinner.setSelection(idx);
                 lvAttendance.setAdapter(attendanceAdapter);
@@ -90,7 +92,18 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
                 idx = position;
                 if(idx != 0) {
-                    surParsing();
+
+                //    surParsing();
+                    Attendance a = new Attendance();
+                    a.setAttendance_state("ABSENT");
+                    a.setAttendance_time("2020-10-12 21:54:41");
+                    Attendance b = new Attendance();
+                    b.setAttendance_state("ABSENT");
+                    b.setAttendance_time("2020-10-13 21:54:41");
+                    attendances.add(a);
+                    attendances.add(b);
+                    attendanceAdapter.setList(attendances);
+                    lvAttendance.setAdapter(attendanceAdapter);
                 }
             }
 
@@ -128,6 +141,15 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         //수행 전
         @Override
         protected void onPreExecute() {
+            try {
+                JSONObject json = new JSONObject();
+                json.put("class_id", idx);
+                json.put("holder_id", "1");
+                body = json.toString();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -136,46 +158,8 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
             String result = null;
 
             try {
+                result = downloadContents(Strings[0]);
 
-//                // Open the connection
-//                URL url = new URL(Strings[0]);
-//                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-//                conn = (HttpURLConnection) url.openConnection();
-//                conn.setRequestMethod("GET");
-//                conn.setConnectTimeout(5000);
-//                conn.setReadTimeout(5000);
-//                conn.setDoInput(true);
-//                conn.setDoOutput(true);
-//                conn.setRequestProperty("Accept", "application/json");
-//                conn.setRequestProperty("content-type", "application/json");
-//               // conn.setRequestProperty("jwt", "jwt token value");
-//             //   conn.addRequestProperty("class_id", String.valueOf(idx));
-//               // conn.addRequestProperty("holder_id", "1");   //수정
-//
-//                JSONObject json = new JSONObject();
-//                json.put("class_id", "1");
-//                json.put("holder_id", "1");
-//                String body = json.toString();
-//
-//                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-//                wr.write(body); //json 형식의 메세지 전달
-//                wr.flush();
-//                wr.close();
-//
-//                InputStream is = conn.getInputStream();
-//
-//                // Get the stream
-//                StringBuilder builder = new StringBuilder();
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-//                String line;
-//                while ((line = reader.readLine()) != null) {
-//                    builder.append(line);
-//                }
-//                reader.close();
-//
-//                // Set the result
-//                result = builder.toString();
-//                Log.d("result", result);
             }
             catch (Exception e) {
                 // Error calling the rest api
@@ -189,36 +173,12 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-           // result = "{'status':200, 'message':'출석 이력 조회 성공', 'data':[{'attendance_time':'2020-09-03', 'attendance_state':'출석'}, {'attendance_time':'2020-09-07', 'attendance_state':'지각'}, {'attendance_time':'2020-09-10', 'attendance_state':'결석'}]}";
-
             parse(result);
 
             attendanceAdapter.setList(attendances);
             lvAttendance.setAdapter(attendanceAdapter);
         }
     }
-
-//    JSONArray array;
-//    private Callback callbackAfterRequest = new Callback() {
-//        @Override
-//        public void onFailure(Request request, IOException e) {
-//            Log.d("request1111111", request.body().toString());
-//
-//        }
-//
-//        @Override
-//        public void onResponse(Response response) throws IOException {
-//            final String strJsonOutput = response.body().string();
-//            Log.d("result11111111111", strJsonOutput);
-//            try {
-//              //  final JSONObject jsonOutput = new JSONObject(strJsonOutput);
-//                  array = new JSONArray(strJsonOutput);
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    };
 
     /* 주소(address)에 접속하여 문자열 데이터를 수신한 후 반환 */
     protected String downloadContents(String address) {
@@ -264,18 +224,12 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
     protected void writeStream(HttpURLConnection conn) {
         try {
-            JSONObject json = new JSONObject();
-            json.put("class_id", "1");
-            json.put("holder_id", "1");
-            String body = json.toString();
-
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write(body); //json 형식의 메세지 전달
             wr.flush();
+
             wr.close();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -315,8 +269,8 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                 object = array.getJSONObject(i);
                 attendance = new Attendance();
 
-                attendance.setAttendance_time(object.getString("attendance_time"));
-                attendance.setAttendance_state(object.getString("attendance_state"));
+                attendance.setAttendance_time(object.getString("time"));
+                attendance.setAttendance_state(object.getString("status"));
 
                 attendances.add(attendance);
             }
