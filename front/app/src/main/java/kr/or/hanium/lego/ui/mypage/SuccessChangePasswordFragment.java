@@ -18,6 +18,7 @@ import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:front/java/hanium/mobile/did_student/ui/mypage/SuccessChangePasswordFragment.java
 public class SuccessChangePasswordFragment extends Fragment {
 =======
@@ -25,6 +26,13 @@ public class SuccessChangePasswordFragment extends Fragment implements OnBackPre
 >>>>>>> feature-front-#21:front/app/src/main/java/kr/or/hanium/lego/ui/mypage/SuccessChangePasswordFragment.java
 =======
 public class SuccessChangePasswordFragment extends Fragment implements OnBackPressedListener {
+>>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
+=======
+<<<<<<<< HEAD:front/app/src/main/java/kr/or/hanium/lego/ui/mypage/SuccessChangePasswordFragment.java
+public class SuccessChangePasswordFragment extends Fragment implements OnBackPressedListener {
+========
+public class SuccessChangePasswordFragment extends Fragment {
+>>>>>>>> 639c271f49286c11711b60597ecf15937c3777aa:front/java/hanium/mobile/did_student/ui/mypage/SuccessChangePasswordFragment.java
 >>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
 
     private View root;

@@ -24,10 +24,14 @@ import kr.or.hanium.lego.OnBackPressedListener;
 public class NoticeFragment extends Fragment {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:front/java/hanium/mobile/did_student/ui/notice/NoticeFragment.java
     Spinner spinner;
 =======
 =======
+>>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
+=======
+<<<<<<<< HEAD:front/app/src/main/java/kr/or/hanium/lego/ui/notice/NoticeFragment.java
 >>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
     private Spinner spinner;
 
@@ -35,8 +39,14 @@ public class NoticeFragment extends Fragment {
     private ArrayList<String> noticeDetailList;
     private ArrayList<String> noticeList;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> feature-front-#21:front/app/src/main/java/kr/or/hanium/lego/ui/notice/NoticeFragment.java
 =======
+>>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
+=======
+========
+    Spinner spinner;
+>>>>>>>> 639c271f49286c11711b60597ecf15937c3777aa:front/java/hanium/mobile/did_student/ui/notice/NoticeFragment.java
 >>>>>>> 639c271f49286c11711b60597ecf15937c3777aa
 
     private ArrayAdapter<String>  noticeDetailAdapter;
