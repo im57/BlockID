@@ -23,7 +23,7 @@ import kr.or.hanium.lego.OnBackPressedListener;
 
 public class NoticeFragment extends Fragment {
 
-    private Spinner spinner;
+    Spinner spinner;
 
     private ListView lvNotice = null;
     private ArrayList<String> noticeDetailList;

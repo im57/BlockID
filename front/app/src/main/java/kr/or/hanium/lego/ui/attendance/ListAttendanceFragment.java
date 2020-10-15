@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -66,6 +65,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         subjectList.add("기초 독일어");
         subjectList.add("프로그래밍 논리의 이해");
 
+
         attendances = new ArrayList<>();
 
         spinner = (Spinner)root.findViewById(R.id.spinner_subject);
@@ -77,6 +77,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
         if(getArguments() != null){
             idx = Integer.parseInt(getArguments().getString("idx"));
+
             if(idx != 0){
                 spinner.setSelection(idx);
                 lvAttendance.setAdapter(attendanceAdapter);
@@ -91,6 +92,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
                 idx = position;
                 if(idx != 0) {
+
                 //    surParsing();
                     Attendance a = new Attendance();
                     a.setAttendance_state("ABSENT");
@@ -148,6 +150,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
 
         @Override
@@ -156,6 +159,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
             try {
                 result = downloadContents(Strings[0]);
+
             }
             catch (Exception e) {
                 // Error calling the rest api
@@ -169,7 +173,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-           // result = "{'status':200, 'message':'출석 이력 조회 성공', 'data':[{'attendance_time':'2020-09-03', 'attendance_state':'출석'}, {'attendance_time':'2020-09-07', 'attendance_state':'지각'}, {'attendance_time':'2020-09-10', 'attendance_state':'결석'}]}";
             parse(result);
 
             attendanceAdapter.setList(attendances);
@@ -202,7 +205,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     // URLConnection 을 전달받아 연결정보 설정 후 연결, 연결 후 수신한 InputStream 반환
     private InputStream getNetworkConnection(HttpURLConnection conn) throws Exception {
         // 클라이언트 아이디 및 시크릿 그리고 요청 URL 선언
-        conn.setRequestMethod("POST");
+        conn.setRequestMethod("GET");
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
         conn.setDoInput(true);

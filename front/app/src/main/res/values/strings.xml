@@ -28,9 +28,13 @@
     <string name="join_service">서비스 가입</string>
     <string name="login">로그인</string>
 
+<<<<<<< HEAD
  <!--   <string name="apiaddress">http://172.20.10.3:6464</string>-->
     <string name="apiaddress">http://192.168.0.8:6464</string>
 
+=======
+    <string name="apiaddress">http://172.20.10.3:6464</string>
+>>>>>>> 3258bd32e61eefee0efe34a10ac6a4c3e0bf777f
     <string name="apiaddress2">172.20.10.3</string>
 
     <string name="email_send">/users/email/send</string>

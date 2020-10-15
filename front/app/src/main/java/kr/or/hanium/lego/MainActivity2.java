@@ -12,6 +12,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,31 +25,18 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
-import kr.or.hanium.lego.ui.attendance.ListAttendanceFragment;
-import kr.or.hanium.lego.ui.join.PasswordFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
@@ -56,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
 
     private String idx;
-    private String body;
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
@@ -149,9 +138,6 @@ public class MainActivity extends AppCompatActivity {
             //qrcode 가 없으면
             if (result.getContents() == null) {
                 Toast.makeText(this, "취소!", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
             } else {
                 //qrcode 결과가 있으면
                 try {
@@ -159,16 +145,26 @@ public class MainActivity extends AppCompatActivity {
 
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
+                    builder = new AlertDialog.Builder(this);
 
-                    idx = obj.getString("idx");
+                    idx = obj.getString("idx"); //나중에 삭제
 
-                    surParsing();
+                    //surParsing();
 
+                    builder.setMessage("강의 번호 " + idx + "\n출석체크 완료")    //나중에 삭제
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("idx", idx);
+                                    navController.navigate(R.id.action_check_to_list, bundle);
+                                }
+                            }).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     String temp = result.getContents();
 
-                    Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity2.this, result.getContents(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -212,20 +208,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class RestAPITask extends AsyncTask<String, Void, String> {
+        String jsonStudent;
 
         //수행 전
         @Override
         protected void onPreExecute() {
-            try {
-                JSONObject json = new JSONObject();
-
-                json.put("class_id", idx);
-                json.put("holder_id", "1");
-
-                body = json.toString();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            jsonStudent = "{'class_id':'" + idx + "'}";
         }
 
         @Override
@@ -233,7 +221,33 @@ public class MainActivity extends AppCompatActivity {
             String result = null;
 
             try {
-                result = downloadContents(Strings[0]);
+                // Open the connection
+                URL url = new URL(Strings[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(5000);
+                conn.setReadTimeout(5000);
+                conn.setDefaultUseCaches(false);
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("content-type", "application/json");
+
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(jsonStudent); //json 형식의 메세지 전달
+                wr.flush();
+
+                // Get the stream
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                reader.close();
+
+                // Set the result
+                result = builder.toString();
+                return result;
             }
             catch (Exception e) {
                 // Error calling the rest api
@@ -246,10 +260,9 @@ public class MainActivity extends AppCompatActivity {
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-            builder = new AlertDialog.Builder(MainActivity.this);
+            builder = new AlertDialog.Builder(MainActivity2.this);
 
             builder.setMessage("강의 번호 " + idx + "\n출석체크 완료")
-                    .setCancelable(false)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -259,83 +272,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show();
         }
-    }
-
-    /* 주소(address)에 접속하여 문자열 데이터를 수신한 후 반환 */
-    protected String downloadContents(String address) {
-        HttpURLConnection conn = null;
-        InputStream stream = null;
-        String result = null;
-
-        try {
-            URL url = new URL(address);
-            conn = (HttpURLConnection)url.openConnection();
-            stream = getNetworkConnection(conn);
-            result = readStreamToString(stream);
-            if (stream != null) stream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-        return result;
-    }
-
-    // URLConnection 을 전달받아 연결정보 설정 후 연결, 연결 후 수신한 InputStream 반환
-    private InputStream getNetworkConnection(HttpURLConnection conn) throws Exception {
-        // 클라이언트 아이디 및 시크릿 그리고 요청 URL 선언
-        conn.setRequestMethod("POST");
-        conn.setConnectTimeout(5000);
-        conn.setReadTimeout(5000);
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("content-type", "application/json");
-
-        writeStream(conn);
-
-        if (conn.getResponseCode() != HttpsURLConnection.HTTP_OK) {
-            throw new IOException("HTTP error code: " + conn.getResponseCode());
-        }
-
-        return conn.getInputStream();
-    }
-
-    protected void writeStream(HttpURLConnection conn) {
-        try {
-            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-            wr.write(body); //json 형식의 메세지 전달
-            wr.flush();
-            wr.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /* InputStream을 전달받아 문자열로 변환 후 반환 */
-    protected String readStreamToString(InputStream stream){
-        StringBuilder result = new StringBuilder();
-
-        try {
-            InputStreamReader inputStreamReader = new InputStreamReader(stream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-            String readLine = bufferedReader.readLine();
-
-            while (readLine != null) {
-                result.append(readLine + "\n");
-                readLine = bufferedReader.readLine();
-            }
-
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d("result", result.toString());
-        return result.toString();
     }
 }
 
