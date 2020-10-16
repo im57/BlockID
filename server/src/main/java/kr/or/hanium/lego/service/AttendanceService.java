@@ -69,7 +69,7 @@ public class AttendanceService {
         List<Class> classList = classRepository.findAll();
 
         List<FetchClassesResultVM> classVMList = classList.stream()
-                .map(x -> new FetchClassesResultVM(x.getName()))
+                .map(x -> new FetchClassesResultVM(x.getName(), x.getId()))
                 .collect(Collectors.toList());
 
         return classVMList;
