@@ -134,6 +134,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     //출석이력 받아오기
     public void parsingAttendance() {
         try {
+            //안드로이드 내장 DB에 저장된 holder_id 가져오기
             db = helper.getReadableDatabase();
 
             cursor = db.rawQuery("select * from " + HolderDBHelper.TABLE_NAME, null);
