@@ -4,8 +4,10 @@ import io.swagger.annotations.ApiOperation;
 import kr.or.hanium.lego.service.AttendanceService;
 import kr.or.hanium.lego.vm.AddAttendanceVM;
 import kr.or.hanium.lego.vm.FetchAttendanceResultVM;
+import kr.or.hanium.lego.vm.FetchClassesResultVM;
 import kr.or.hanium.lego.vm.FetchIdcardResultVM;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +27,19 @@ public class AttendanceController {
     }
 
     @ApiOperation(value = "출석 내역 조회")
-    @GetMapping("/list")
-    public List<FetchAttendanceResultVM> fetchAttendance(@RequestBody AddAttendanceVM request){
-        List<FetchAttendanceResultVM> attendanceVMList = attendanceService.fetchAttendanceList(request);
+    @GetMapping(value = "/list")
+    public List<FetchAttendanceResultVM> fetchAttendance(@RequestParam(value = "class_id") Long class_id,
+                                                         @RequestParam(value = "holder_id") Long holder_id){
+        List<FetchAttendanceResultVM> attendanceVMList = attendanceService.fetchAttendanceList(class_id, holder_id);
         return attendanceVMList;
     }
 
+    @ApiOperation(value = "수업 목록 조회")
+    @GetMapping(value = "/classes")
+    public List<FetchClassesResultVM> fetchClasses() {
+        List<FetchClassesResultVM> fetchClassesResultVM = attendanceService.fetchClasses();
+
+        return fetchClassesResultVM;
+    }
 
 }
