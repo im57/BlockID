@@ -2,6 +2,8 @@
 
 package kr.or.hanium.lego.ui.attendance;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
+import kr.or.hanium.lego.HolderDBHelper;
 import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 
@@ -52,6 +55,11 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     private int idx =-1;
     private String type;
 
+    private HolderDBHelper helper;
+    private SQLiteDatabase db;
+    private Cursor cursor;
+    private String holder_id;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_attendance_list, container, false);
@@ -62,6 +70,8 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         subjectList.add("수업을 선택해주세요");
 
         attendances = new ArrayList<>();
+
+        helper = new HolderDBHelper(getContext());
 
         //메뉴 열려있으면 닫기
         activity.closeMenu();
@@ -124,8 +134,18 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     //출석이력 받아오기
     public void parsingAttendance() {
         try {
+            db = helper.getReadableDatabase();
+
+            cursor = db.rawQuery("select * from " + HolderDBHelper.TABLE_NAME, null);
+            cursor.moveToNext();
+
+            holder_id = cursor.getString(cursor.getColumnIndex("holder_id"));
+
+            cursor.close();
+            helper.close();
+
             type = "attendance";
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list)+"?class_id="+idx+"&holder_id=1");
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list)+"?class_id="+idx+"&holder_id=" + holder_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

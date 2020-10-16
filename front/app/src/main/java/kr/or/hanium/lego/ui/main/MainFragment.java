@@ -2,6 +2,8 @@
 
 package kr.or.hanium.lego.ui.main;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +34,7 @@ import java.util.Date;
 import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
+import kr.or.hanium.lego.HolderDBHelper;
 import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 import kr.or.hanium.lego.ui.join.Student;
@@ -54,6 +57,11 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     private Student student;
     private String type;
 
+    private HolderDBHelper helper;
+    private SQLiteDatabase db;
+    private Cursor cursor;
+    private String holder_id;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main, container, false);
@@ -69,6 +77,8 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         reissue = root.findViewById(R.id.btn_main_reissue);
 
         student = new Student();
+
+        helper = new HolderDBHelper(getContext());
 
         //학생증 조회
         parsingIssue();
@@ -110,8 +120,18 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     //학생증 조회
     public void parsingIssue() {
         try {
+            db = helper.getReadableDatabase();
+
+            cursor = db.rawQuery("select * from " + HolderDBHelper.TABLE_NAME, null);
+            cursor.moveToNext();
+
+            holder_id = cursor.getString(cursor.getColumnIndex("holder_id"));
+
+            cursor.close();
+            helper.close();
+
             type = "issue";
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+"1");  //수정
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+holder_id);  //수정
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -121,7 +141,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     public void parsingReissue() {
         try {
             type = "reissue";
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.reIssue)+"1");  //수정
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.reIssue)+holder_id);  //수정
         } catch (Exception e) {
             e.printStackTrace();
         }
