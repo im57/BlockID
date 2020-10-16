@@ -120,6 +120,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     //학생증 조회
     public void parsingIssue() {
         try {
+            //안드로이드 내장 DB에 저장된 holder_id 가져오기
             db = helper.getReadableDatabase();
 
             cursor = db.rawQuery("select * from " + HolderDBHelper.TABLE_NAME, null);
@@ -131,7 +132,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
             helper.close();
 
             type = "issue";
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+holder_id);  //수정
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+holder_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,7 +142,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     public void parsingReissue() {
         try {
             type = "reissue";
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.reIssue)+holder_id);  //수정
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.reIssue)+holder_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

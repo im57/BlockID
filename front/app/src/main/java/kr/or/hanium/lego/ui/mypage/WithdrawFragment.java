@@ -63,6 +63,7 @@ public class WithdrawFragment extends Fragment implements OnBackPressedListener 
                     }
                 });
 
+                //안드로이드 내장 DB에 저장된 holder_id 삭제
                 SQLiteDatabase db = helper.getWritableDatabase();
 
                 db.delete(HolderDBHelper.TABLE_NAME, null, null);
