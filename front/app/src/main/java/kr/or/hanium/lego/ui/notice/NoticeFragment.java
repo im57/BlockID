@@ -21,7 +21,7 @@ import kr.or.hanium.R;
 import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 
-public class NoticeFragment extends Fragment {
+public class NoticeFragment extends Fragment implements OnBackPressedListener{
 
     Spinner spinner;
 
@@ -86,8 +86,16 @@ public class NoticeFragment extends Fragment {
     }
 
     @Override
+    public void onBackPressed() {
+        Navigation.findNavController(root).navigate(R.id.action_go_home);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        activity.setOnBackPressedListener(null);
+        activity.setOnBackPressedListener(this);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 }

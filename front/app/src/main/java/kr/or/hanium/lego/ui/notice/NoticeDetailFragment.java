@@ -43,5 +43,8 @@ public class NoticeDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
         activity.setOnBackPressedListener(null);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 }

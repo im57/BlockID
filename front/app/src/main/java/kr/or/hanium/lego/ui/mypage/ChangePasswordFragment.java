@@ -80,6 +80,9 @@ public class ChangePasswordFragment extends Fragment implements OnBackPressedLis
     public void onResume() {
         super.onResume();
         activity.setOnBackPressedListener(this);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 
     @Override

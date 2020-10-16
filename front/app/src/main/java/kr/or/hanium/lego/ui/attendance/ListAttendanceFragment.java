@@ -93,7 +93,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                 idx = position;
                 if(idx != 0) {
 
-                //    surParsing();
+                //    parsing();
                     Attendance a = new Attendance();
                     a.setAttendance_state("ABSENT");
                     a.setAttendance_time("2020-10-12 21:54:41");
@@ -119,6 +119,9 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     public void onResume() {
         super.onResume();
         activity.setOnBackPressedListener(this);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 
     @Override
@@ -127,7 +130,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     }
 
 
-    public void surParsing() {
+    public void parsing() {
         try {
             //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list));

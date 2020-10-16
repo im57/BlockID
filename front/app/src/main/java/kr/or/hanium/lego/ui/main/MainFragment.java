@@ -69,13 +69,13 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
 
         student = new Student();
 
-        surParsingIssue();
+        parsingIssue();
 
         //재발급 버튼 클릭
         fabReissue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                surParsingReissue();
+                parsingReissue();
             }
         });
 
@@ -85,6 +85,9 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
+
         activity.setOnBackPressedListener(this);
     }
 
@@ -102,7 +105,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     }
 
 
-    public void surParsingIssue() {
+    public void parsingIssue() {
         try {
             type = "issue";
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+"1");  //수정
@@ -111,7 +114,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         }
     }
 
-    public void surParsingReissue() {
+    public void parsingReissue() {
         try {
             type = "reissue";
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.reIssue)+"1");  //수정

@@ -79,7 +79,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
             public void onCodeCreated(String encodedCode) {
                 //TODO: save somewhere;
                 PreferencesSettings.saveToPref(getActivity(), encodedCode);
-                surParsing();
+                parsing();
             }
 
             @Override
@@ -106,7 +106,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
     }
 
-    public void surParsing() {
+    public void parsing() {
         try {
             //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.signup));
