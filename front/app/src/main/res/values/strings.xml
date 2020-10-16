@@ -30,14 +30,12 @@
 
    <string name="apiaddress">http://54.180.158.67:6464</string>
 
-    <string name="apiaddress2">172.20.10.3</string>
-
     <string name="email_send">/users/email/send</string>
     <string name="signup">/users/signup</string>
     <string name="idcard">/idcard/</string>
     <string name="reIssue">/idcard/activate/</string>
     <string name="qr">/attendance</string>
     <string name="attendance_list">/attendance/list</string>
-    <string name="attendance_list2">attendance/list</string>
+    <string name="class_list">/attendance/classes</string>
 
 </resources>

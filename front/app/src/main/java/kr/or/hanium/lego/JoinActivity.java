@@ -8,7 +8,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import kr.or.hanium.R;
 
 public class JoinActivity extends AppCompatActivity {
-    private AppBarConfiguration mAppBarConfiguration;
 
     private OnBackPressedListener listener;
 

@@ -1,4 +1,4 @@
-//출석체크 fragment
+//출석체크
 
 package kr.or.hanium.lego.ui.attendance;
 
