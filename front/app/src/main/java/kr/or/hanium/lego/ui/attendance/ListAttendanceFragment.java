@@ -93,17 +93,17 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                 idx = position;
                 if(idx != 0) {
 
-                //    parsing();
-                    Attendance a = new Attendance();
-                    a.setAttendance_state("ABSENT");
-                    a.setAttendance_time("2020-10-12 21:54:41");
-                    Attendance b = new Attendance();
-                    b.setAttendance_state("ABSENT");
-                    b.setAttendance_time("2020-10-13 21:54:41");
-                    attendances.add(a);
-                    attendances.add(b);
-                    attendanceAdapter.setList(attendances);
-                    lvAttendance.setAdapter(attendanceAdapter);
+                    parsing();
+//                    Attendance a = new Attendance();
+//                    a.setAttendance_state("ABSENT");
+//                    a.setAttendance_time("2020-10-12 21:54:41");
+//                    Attendance b = new Attendance();
+//                    b.setAttendance_state("ABSENT");
+//                    b.setAttendance_time("2020-10-13 21:54:41");
+//                    attendances.add(a);
+//                    attendances.add(b);
+//                    attendanceAdapter.setList(attendances);
+//                    lvAttendance.setAdapter(attendanceAdapter);
                 }
             }
 
@@ -133,7 +133,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     public void parsing() {
         try {
             //쿼리값 붙이기
-            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list));
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list)+"?class_id="+idx+"&holder_id=1");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,15 +144,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         //수행 전
         @Override
         protected void onPreExecute() {
-            try {
-                JSONObject json = new JSONObject();
-                json.put("class_id", idx);
-                json.put("holder_id", "1");
-                body = json.toString();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
         }
 
@@ -216,26 +207,11 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("content-type", "application/json");
 
-        writeStream(conn);
-
         if (conn.getResponseCode() != HttpsURLConnection.HTTP_OK) {
             throw new IOException("HTTP error code: " + conn.getResponseCode());
         }
 
         return conn.getInputStream();
-    }
-
-    protected void writeStream(HttpURLConnection conn) {
-        try {
-            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-            wr.write(body); //json 형식의 메세지 전달
-            wr.flush();
-
-            wr.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /* InputStream을 전달받아 문자열로 변환 후 반환 */
