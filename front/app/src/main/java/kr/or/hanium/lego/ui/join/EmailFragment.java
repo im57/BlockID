@@ -85,6 +85,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 if(stEmail.equals("")){
                     Toast.makeText(getContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else {
+                    //이메일 전송
                     parsing();
                 }
             }
@@ -101,6 +102,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 } else {
                     builder = new AlertDialog.Builder(getContext());
 
+                    //인증 번호 비교
                     if(stCheck.equals(rand)){
                         check = true;
                         tvCheck.setText("인증 성공");
@@ -123,6 +125,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         btnNext.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //인증 여부 확인
                 if(check){
                     Navigation.findNavController(root).navigate(R.id.action_nav_join_to_nav_join_password);
                 }
@@ -159,9 +162,9 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         }
     }
 
+    //이메일 인증 전송
     public void parsing() {
         try {
-            //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.email_send));
         } catch (Exception e) {
             e.printStackTrace();
@@ -300,8 +303,9 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         try{
             JSONObject object = new JSONObject(json);
 
+            //인증번호
             rand = object.getString("authCode");
-            Log.d("randddddddddd", rand); //삭제
+
         } catch (JSONException e){
             e.printStackTrace();
         }

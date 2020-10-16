@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
     private TextView tvNum;
     private TextView tvDate;
 
-    private FloatingActionButton fabReissue;
+    private Button reissue;
 
     private View root;
     private MainActivity activity;
@@ -65,16 +66,18 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         tvNum = root.findViewById(R.id.text_main_num);
         tvDate = root.findViewById(R.id.text_main_date);
 
-        fabReissue = root.findViewById(R.id.fab_main_reissue);
+        reissue = root.findViewById(R.id.btn_main_reissue);
 
         student = new Student();
 
+        //학생증 조회
         parsingIssue();
 
         //재발급 버튼 클릭
-        fabReissue.setOnClickListener(new View.OnClickListener() {
+        reissue.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //학생증 재발급
                 parsingReissue();
             }
         });
@@ -104,7 +107,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         }
     }
 
-
+    //학생증 조회
     public void parsingIssue() {
         try {
             type = "issue";
@@ -114,6 +117,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         }
     }
 
+    //학생증 재발급
     public void parsingReissue() {
         try {
             type = "reissue";
@@ -156,8 +160,9 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
             tvNum.setText(student.getStudent_id());
             tvDate.setText(student.getExpireDate());
 
+            //EXPIRED 상태에만 버튼 show
             if(student.getStatus().equals("ACTIVATED")){
-                fabReissue.hide();
+                reissue.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -225,7 +230,6 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("result", result.toString());
         return result.toString();
     }
 

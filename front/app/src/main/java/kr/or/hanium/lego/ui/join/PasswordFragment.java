@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,9 +16,6 @@ import androidx.navigation.Navigation;
 
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
 import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
-import com.beautycoder.pflockscreen.security.PFResult;
-import com.beautycoder.pflockscreen.security.PFSecurityManager;
-import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,18 +24,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
 import kr.or.hanium.lego.JoinActivity;
-import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 import kr.or.hanium.lego.PreferencesSettings;
 
@@ -62,6 +53,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
         activity = (JoinActivity) getActivity();
 
+        //입력 정보 받아오기
         student = (Student) getArguments().get("student");
 
         fragment = new PFLockScreenFragment();
@@ -79,6 +71,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
             public void onCodeCreated(String encodedCode) {
                 //TODO: save somewhere;
                 PreferencesSettings.saveToPref(getActivity(), encodedCode);
+                //비밀번호까지 입력 완료 후 회원 등록
                 parsing();
             }
 
@@ -106,9 +99,9 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
     }
 
+    //회원 가입 + 학생증 생성
     public void parsing() {
         try {
-            //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.signup));
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,7 +109,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
     }
 
     class RestAPITask extends AsyncTask<String, Void, String> {
-        String jsonStudent;
 
         //수행 전
         @Override
@@ -229,7 +221,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("result", result.toString());
+
         return result.toString();
     }
 

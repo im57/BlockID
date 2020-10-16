@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     private MainActivity activity;
 
     private int idx =-1;
-    private String body;
+    private String type;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,28 +60,21 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
         subjectList = new ArrayList<>();
         subjectList.add("수업을 선택해주세요");
-        subjectList.add("데이터베이스 프로그래밍");
-        subjectList.add("기초 독일어");
-        subjectList.add("프로그래밍 논리의 이해");
-
 
         attendances = new ArrayList<>();
+
+        //메뉴 열려있으면 닫기
+        activity.closeMenu();
 
         spinner = (Spinner)root.findViewById(R.id.spinner_subject);
         subjectAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, subjectList);
         spinner.setAdapter(subjectAdapter);
 
+        //class 받아오기
+        parsingClass();
+
         lvAttendance = root.findViewById(R.id.list_attendance);
-        attendanceAdapter = new AttendanceAdapter(getActivity(), R.layout.listview_attendance, attendances);
-
-        if(getArguments() != null){
-            idx = Integer.parseInt(getArguments().getString("idx"));
-
-            if(idx != 0){
-                spinner.setSelection(idx);
-                lvAttendance.setAdapter(attendanceAdapter);
-            }
-        }
+        attendanceAdapter = new AttendanceAdapter(getActivity(), R.layout.listview_attendance, null);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
            //과목 선택
@@ -92,18 +84,8 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
 
                 idx = position;
                 if(idx != 0) {
-
-                    parsing();
-//                    Attendance a = new Attendance();
-//                    a.setAttendance_state("ABSENT");
-//                    a.setAttendance_time("2020-10-12 21:54:41");
-//                    Attendance b = new Attendance();
-//                    b.setAttendance_state("ABSENT");
-//                    b.setAttendance_time("2020-10-13 21:54:41");
-//                    attendances.add(a);
-//                    attendances.add(b);
-//                    attendanceAdapter.setList(attendances);
-//                    lvAttendance.setAdapter(attendanceAdapter);
+                    //출석이력 받아오기
+                    parsingAttendance();
                 }
             }
 
@@ -129,10 +111,20 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         Navigation.findNavController(root).navigate(R.id.action_go_home);
     }
 
-
-    public void parsing() {
+    //클래스 받아오기
+    public void parsingClass() {
         try {
-            //쿼리값 붙이기
+            type = "class";
+            new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.class_list));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //출석이력 받아오기
+    public void parsingAttendance() {
+        try {
+            type = "attendance";
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.attendance_list)+"?class_id="+idx+"&holder_id=1");
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,10 +159,24 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-            parse(result);
+            if(type.equals("attendance")) {
+                parse(result);
 
-            attendanceAdapter.setList(attendances);
-            lvAttendance.setAdapter(attendanceAdapter);
+                attendanceAdapter.setList(attendances);
+                lvAttendance.setAdapter(attendanceAdapter);
+            } else{
+                parse(result);
+                subjectAdapter.notifyDataSetChanged();
+
+                //QR스캔으로 이력조회 넘어온 경우
+                if(getArguments() != null){
+                    idx = Integer.parseInt(getArguments().getString("idx"));
+
+                    if(idx != 0){
+                        spinner.setSelection(idx);
+                    }
+                }
+            }
         }
     }
 
@@ -203,8 +209,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
         conn.setDoInput(true);
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("content-type", "application/json");
 
         if (conn.getResponseCode() != HttpsURLConnection.HTTP_OK) {
@@ -233,7 +237,7 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("result", result.toString());
+
         return result.toString();
     }
 
@@ -244,16 +248,21 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
             JSONObject object;
             Attendance attendance;
 
-            for(int i = 0; i< array.length(); i++){
+            for(int i = 0; i< array.length(); i++) {
                 object = array.getJSONObject(i);
                 attendance = new Attendance();
 
-                attendance.setAttendance_time(object.getString("time"));
-                attendance.setAttendance_state(object.getString("status"));
+                if (type.equals("class")) {
+                    //클래스리스트 저장
+                    subjectList.add(object.getString("name"));
+                } else {
+                    //출석리스트 저장
+                    attendance.setAttendance_time(object.getString("time"));
+                    attendance.setAttendance_state(object.getString("status"));
 
-                attendances.add(attendance);
+                    attendances.add(attendance);
+                }
             }
-
         } catch (JSONException e){
             e.printStackTrace();
         }

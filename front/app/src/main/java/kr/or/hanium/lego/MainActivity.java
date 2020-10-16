@@ -166,40 +166,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //scan결과 받기
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-
-        if (result != null) {
-            //qrcode 가 없으면
-            if (result.getContents() == null) {
-                Toast.makeText(this, "취소!", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                //qrcode 결과가 있으면
-                try {
-                    String temp = result.getContents();
-
-                    //data를 json으로 변환
-                    JSONObject obj = new JSONObject(result.getContents());
-
-                    idx = obj.getString("idx");
-
-                    parsing();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    String temp = result.getContents();
-
-                    Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+    public void closeMenu(){
+        if(this.drawer.isDrawerOpen(GravityCompat.START)){
+            this.drawer.closeDrawers();
         }
     }
 
@@ -231,9 +200,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //scan결과 받기
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if (result != null) {
+            //qrcode 가 없으면
+            if (result.getContents() == null) {
+                Toast.makeText(this, "취소!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                //qrcode 결과가 있으면
+                try {
+                    String temp = result.getContents();
+
+                    //data를 json으로 변환
+                    JSONObject obj = new JSONObject(result.getContents());
+
+                    idx = obj.getString("idx");
+
+                    //출석 체크(추가)
+                    parsing();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    String temp = result.getContents();
+
+                    Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    //출석 체크(추가)
     public void parsing() {
         try {
-            //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.qr));
         } catch (Exception e) {
             e.printStackTrace();
@@ -277,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             builder = new AlertDialog.Builder(MainActivity.this);
 
-            builder.setMessage("강의 번호 " + idx + "\n출석체크 완료")
+            builder.setMessage("출석체크 완료")
                     .setCancelable(false)
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override

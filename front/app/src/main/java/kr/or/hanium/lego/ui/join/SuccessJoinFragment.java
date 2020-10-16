@@ -1,7 +1,6 @@
-//탈퇴 완료 fragment
+//가입 완료 fragment
 
 package kr.or.hanium.lego.ui.join;
-
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import androidx.navigation.Navigation;
 
 import kr.or.hanium.R;
 import kr.or.hanium.lego.JoinActivity;
