@@ -3,6 +3,8 @@ package kr.or.hanium.lego;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,8 +49,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
 import kr.or.hanium.lego.ui.attendance.CheckAttendance;
-import kr.or.hanium.lego.ui.attendance.ListAttendanceFragment;
-import kr.or.hanium.lego.ui.join.PasswordFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
 
+    private HolderDBHelper helper;
+    private SQLiteDatabase db;
+    private Cursor cursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab_main);
         fabCheck = (FloatingActionButton) findViewById(R.id.fab_main_check);
         fabHome = (FloatingActionButton) findViewById(R.id.fab_go_home);
+
+        helper = new HolderDBHelper(this);
 
         fab.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -253,12 +259,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             try {
+                db = helper.getReadableDatabase();
+
+                cursor = db.rawQuery("select * from " + HolderDBHelper.TABLE_NAME, null);
+                cursor.moveToNext();
+
                 JSONObject json = new JSONObject();
 
                 json.put("class_id", idx);
-                json.put("holder_id", "1");
+                json.put("holder_id", cursor.getString(cursor.getColumnIndex("holder_id")));
 
                 body = json.toString();
+
+                cursor.close();
+                helper.close();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

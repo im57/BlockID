@@ -2,6 +2,9 @@
 
 package kr.or.hanium.lego.ui.join;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +34,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
+import kr.or.hanium.lego.HolderDBHelper;
 import kr.or.hanium.lego.JoinActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 import kr.or.hanium.lego.PreferencesSettings;
@@ -47,6 +51,9 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
     private Student student;
     private String body;
 
+    private HolderDBHelper helper;
+    private SQLiteDatabase db;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_password, container, false);
@@ -55,6 +62,8 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
         //입력 정보 받아오기
         student = (Student) getArguments().get("student");
+
+        helper = new HolderDBHelper(getContext());
 
         fragment = new PFLockScreenFragment();
         builder = new PFFLockScreenConfiguration.Builder(getContext())
@@ -144,6 +153,13 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
+            //스마트폰 내부 db에 holder id 저장
+            db = helper.getWritableDatabase();
+            ContentValues row = new ContentValues();
+            row.put(HolderDBHelper.COL_HOLDER_ID, result);
+            db.insert(HolderDBHelper.TABLE_NAME, null, row);
+            helper.close();
+
             Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_success);
         }
     }

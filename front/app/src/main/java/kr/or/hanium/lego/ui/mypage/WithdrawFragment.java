@@ -22,6 +22,7 @@ import com.beautycoder.pflockscreen.security.PFSecurityManager;
 import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback;
 
 import kr.or.hanium.R;
+import kr.or.hanium.lego.HolderDBHelper;
 import kr.or.hanium.lego.JoinActivity;
 import kr.or.hanium.lego.LoginActivity;
 import kr.or.hanium.lego.MainActivity;
@@ -36,6 +37,9 @@ public class WithdrawFragment extends Fragment implements OnBackPressedListener 
 
     private PFLockScreenFragment fragment;
 
+    private HolderDBHelper helper;
+    private SQLiteDatabase db;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_mypage_withdraw, container, false);
@@ -43,6 +47,8 @@ public class WithdrawFragment extends Fragment implements OnBackPressedListener 
         activity = (MainActivity)getActivity();
 
         fragment = new PFLockScreenFragment();
+
+        helper = new HolderDBHelper(getContext());
 
         button = root.findViewById(R.id.btn_withdraw);
         button.setOnClickListener(new Button.OnClickListener() {
@@ -56,6 +62,13 @@ public class WithdrawFragment extends Fragment implements OnBackPressedListener 
 
                     }
                 });
+
+                SQLiteDatabase db = helper.getWritableDatabase();
+
+                db.delete(HolderDBHelper.TABLE_NAME, null, null);
+                helper.close();
+
+
                 getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
