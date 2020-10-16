@@ -24,7 +24,7 @@ import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 
 
-public class EditInfoFragment extends Fragment {
+public class EditInfoFragment extends Fragment implements OnBackPressedListener {
 
     private ArrayAdapter<String> adapter;
     private ArrayList<String> list;
@@ -81,9 +81,16 @@ public class EditInfoFragment extends Fragment {
     }
 
     @Override
+    public void onBackPressed() {
+        Navigation.findNavController(root).navigate(R.id.action_go_home);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        activity.setOnBackPressedListener(null);
+        activity.setOnBackPressedListener(this);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 
 }

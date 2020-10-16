@@ -103,6 +103,8 @@ public class CheckPasswordFragment extends Fragment implements OnBackPressedList
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
         activity.setOnBackPressedListener(this);
     }
 

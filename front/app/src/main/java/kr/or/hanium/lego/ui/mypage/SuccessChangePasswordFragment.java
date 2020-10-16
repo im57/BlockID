@@ -46,6 +46,9 @@ public class SuccessChangePasswordFragment extends Fragment implements OnBackPre
     public void onResume() {
         super.onResume();
         activity.setOnBackPressedListener(this);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 
     @Override

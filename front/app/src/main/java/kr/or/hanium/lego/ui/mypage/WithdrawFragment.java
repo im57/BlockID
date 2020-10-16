@@ -70,6 +70,9 @@ public class WithdrawFragment extends Fragment implements OnBackPressedListener 
     public void onResume() {
         super.onResume();
         activity.setOnBackPressedListener(this);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.closeFab();
     }
 
     @Override

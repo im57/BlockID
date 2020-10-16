@@ -36,6 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
 import kr.or.hanium.lego.JoinActivity;
+import kr.or.hanium.lego.MainActivity;
 import kr.or.hanium.lego.OnBackPressedListener;
 
 public class EmailFragment extends Fragment implements OnBackPressedListener {
@@ -84,7 +85,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 if(stEmail.equals("")){
                     Toast.makeText(getContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else {
-                    surParsing();
+                    parsing();
                 }
             }
         });
@@ -144,6 +145,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         }
     }
 
+
     @Override
     public void onBackPressed() {
         if(first){
@@ -157,7 +159,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         }
     }
 
-    public void surParsing() {
+    public void parsing() {
         try {
             //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.email_send));

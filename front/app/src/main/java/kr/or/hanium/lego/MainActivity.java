@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -43,6 +46,7 @@ import java.net.URLEncoder;
 import javax.net.ssl.HttpsURLConnection;
 
 import kr.or.hanium.R;
+import kr.or.hanium.lego.ui.attendance.CheckAttendance;
 import kr.or.hanium.lego.ui.attendance.ListAttendanceFragment;
 import kr.or.hanium.lego.ui.join.PasswordFragment;
 
@@ -90,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
         fabCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_to_check);
+                //navController.navigate(R.id.action_to_check);
+                CheckAttendance checkAttendance = new CheckAttendance();
+                checkAttendance.check(MainActivity.this);
             }
         });
 
@@ -105,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+        navigationView.getMenu().findItem(R.id.nav_attendance_check).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                CheckAttendance checkAttendance = new CheckAttendance();
+                checkAttendance.check(MainActivity.this);
+                return true;
+            }
+        });
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_main,
                 R.id.nav_mypage, R.id.nav_mypage_edit, R.id.nav_mypage_edit_check_password,
@@ -117,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+    }
+
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -133,10 +155,14 @@ public class MainActivity extends AppCompatActivity {
     //back 버튼 클릭 처리
     @Override
     public void onBackPressed() {
-        if(listener!=null){
-            listener.onBackPressed();
-        }else{
-            super.onBackPressed();
+        if(this.drawer.isDrawerOpen(GravityCompat.START)){
+            this.drawer.closeDrawers();
+        } else{
+            if(listener!=null){
+                listener.onBackPressed();
+            }else{
+                super.onBackPressed();
+            }
         }
     }
 
@@ -162,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
                     idx = obj.getString("idx");
 
-                    surParsing();
+                    parsing();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,15 +203,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onPaused() {
-        close();
-    }
-
     //fab버튼 클릭
     public void anim() {
         if (isFabOpen) {
-            close();
-        } else {
+            fabHome.startAnimation(fab_close);
+            fabCheck.startAnimation(fab_close);
+            fabHome.setClickable(false);
+            fabCheck.setClickable(false);
+            isFabOpen = false;
+        }
+        else {
             fabHome.startAnimation(fab_open);
             fabCheck.startAnimation(fab_open);
             fabHome.setClickable(true);
@@ -194,15 +221,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void close(){
-        fabHome.startAnimation(fab_close);
-        fabCheck.startAnimation(fab_close);
-        fabHome.setClickable(false);
-        fabCheck.setClickable(false);
-        isFabOpen = false;
+    public void closeFab(){
+        if (isFabOpen) {
+            fabHome.startAnimation(fab_close);
+            fabCheck.startAnimation(fab_close);
+            fabHome.setClickable(false);
+            fabCheck.setClickable(false);
+            isFabOpen = false;
+        }
     }
 
-    public void surParsing() {
+    public void parsing() {
         try {
             //쿼리값 붙이기
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.qr));
