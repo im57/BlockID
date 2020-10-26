@@ -9,9 +9,12 @@ import kr.or.hanium.lego.vm.SignupVM;
 import lombok.RequiredArgsConstructor;
 import org.bitcoinj.core.Base58;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -46,6 +49,24 @@ public class RegisterService {
         newStCard.setIssuer_id(0L);
 
         StudentIdCard savedStCard = studentIdCardRepository.save(newStCard);
+
+        // 1. 블록체인 원장에 학생증 저장 - (api/setCard)
+        String url = "http://13.209.48.77:8000";
+        Map<String, String> params = new HashMap<>();
+        params.put("card_did", savedStCard.getCard_did());
+        params.put("holder_id", savedStCard.getHolder_id().toString());
+        params.put("issuer_id", savedStCard.getIssuer_id().toString());
+        params.put("update_date", LocalDateTime.now().toString());
+
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(
+                url + "/api/setCard?card_did={card_did}&holder_id={holder_id}&issuer_id={issuer_id}&update_date={update_date}",
+                String.class,
+                params
+        );
+
+        System.out.println("========블록체인 원장에 학생증 저장 - (api/setCard)======");
+        System.out.println(result);
 
         return savedStCard.getId();
     }

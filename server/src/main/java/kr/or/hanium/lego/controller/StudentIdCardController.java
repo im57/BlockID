@@ -29,7 +29,6 @@ public class StudentIdCardController {
     public FetchIdcardResultVM activateStudentIdCard(@PathVariable Long holder_id) {
         LocalDateTime expireDate = registerService.getExpireDate(LocalDateTime.now());
         FetchIdcardResultVM fetchIdcardResultVM = studentIdCardService.activateStudentIdCardWithHolderId(holder_id, expireDate);
-
         return fetchIdcardResultVM;
     }
 

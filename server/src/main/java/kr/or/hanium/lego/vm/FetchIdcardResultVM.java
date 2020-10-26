@@ -15,4 +15,5 @@ public class FetchIdcardResultVM {
     private String department;
     private Long holder_id;
     private String name;
+    private Boolean isInBlockchainLedger;
 }
