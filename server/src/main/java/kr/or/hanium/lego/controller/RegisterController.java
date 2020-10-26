@@ -4,12 +4,12 @@ import io.swagger.annotations.ApiOperation;
 import kr.or.hanium.lego.service.dto.MailDto;
 import kr.or.hanium.lego.service.EmailService;
 import kr.or.hanium.lego.service.RegisterService;
-import kr.or.hanium.lego.vm.FetchIdcardResultVM;
 import kr.or.hanium.lego.vm.SendEmailResultVM;
 import kr.or.hanium.lego.vm.SendEmailVM;
 import kr.or.hanium.lego.vm.SignupVM;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
