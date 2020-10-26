@@ -89,6 +89,7 @@ public class MainFragment extends Fragment  implements OnBackPressedListener {
             public void onClick(View v) {
                 //학생증 재발급
                 parsingReissue();
+                Toast.makeText(getContext(), "학생증 재발급 완료", Toast.LENGTH_SHORT).show();
             }
         });
 

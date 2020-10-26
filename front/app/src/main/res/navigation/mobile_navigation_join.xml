@@ -39,6 +39,8 @@
             app:destination="@id/nav_join_name"/>
         <action android:id="@+id/action_nav_join_password_to_nav_join_success"
             app:destination="@id/nav_join_success">
+        <action android:id="@+id/action_password_to_first"
+            app:destination="@id/nav_join_email"/>
         </action>
 
     </fragment>
