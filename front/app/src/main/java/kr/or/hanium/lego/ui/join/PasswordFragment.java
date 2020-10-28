@@ -142,7 +142,8 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
             try {
                 result = downloadContents(Strings[0]);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 // Error calling the rest api
                 Log.e("REST_API", "POST method failed: " + e.getMessage());
                 e.printStackTrace();
@@ -161,6 +162,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
             helper.close();
 
             Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_success);
+
         }
     }
 

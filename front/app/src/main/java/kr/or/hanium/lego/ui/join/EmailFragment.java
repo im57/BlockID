@@ -74,8 +74,6 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         btnCheck = root.findViewById(R.id.btn_email_check);
         btnNext = root.findViewById(R.id.btn_join_email_next);
 
-        etEmail.setText("eovhehd1986@gmail.com");  //삭제
-
         //보내기
         btnSend.setOnClickListener(new Button.OnClickListener() {
             @Override
