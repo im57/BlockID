@@ -226,10 +226,17 @@ public class MainActivity extends AppCompatActivity {
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
 
-                    idx = obj.getString("idx");
+                    if(obj.has("idx")){
+                        idx = obj.getString("idx");
 
-                    //출석 체크(추가)
-                    parsing();
+                        //출석 체크(추가)
+                        parsing();
+                    } else{
+                        Toast.makeText(this, "수업의 QR코드를 스캔해주세요", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
