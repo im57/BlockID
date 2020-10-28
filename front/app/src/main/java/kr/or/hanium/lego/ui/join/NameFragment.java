@@ -45,17 +45,10 @@ public class NameFragment extends Fragment implements OnBackPressedListener  {
         btnNext = root.findViewById(R.id.btn_join_name);
 
         //삭제
-<<<<<<< HEAD
         //etSchool.setText("길동대학교");
         //etName.setText("홍길동");
         //etDepartment.setText("컴퓨터학과");
         //etNum.setText("20200001");
-=======
-        etSchool.setText("길동대학교");
-        etName.setText("홍길동");
-        etDepartment.setText("컴퓨터학과");
-        etNum.setText("20200001");
->>>>>>> 8cfa3d4ede8d2f8888ba0326fe455155a01bc46b
 
         //가입하기
         btnNext.setOnClickListener(new Button.OnClickListener() {
@@ -68,7 +61,6 @@ public class NameFragment extends Fragment implements OnBackPressedListener  {
                 student.setDepartment(String.valueOf(etDepartment.getText()));
 
                 if(student.getUniversity().equals("")){
-<<<<<<< HEAD
                     Toast.makeText(getContext(), "학교를 입력해주세요", Toast.LENGTH_SHORT).show();
                 } else if(student.getStudent_id().equals("")){
                     Toast.makeText(getContext(), "학번 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -77,16 +69,6 @@ public class NameFragment extends Fragment implements OnBackPressedListener  {
                 } else if(student.getName().equals("")){
                     Toast.makeText(getContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
                 } else{
-=======
-                    Toast.makeText(getContext(), "학교를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else if(student.getStudent_id().equals("")){
-                    Toast.makeText(getContext(), "학번을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else if(student.getDepartment().equals("")) {
-                    Toast.makeText(getContext(), "학과를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                } else if(student.getName().equals("")){
-                    Toast.makeText(getContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else {
->>>>>>> 8cfa3d4ede8d2f8888ba0326fe455155a01bc46b
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("student", student);
                     Navigation.findNavController(root).navigate(R.id.action_nav_join_name_to_nav_join_password, bundle);
