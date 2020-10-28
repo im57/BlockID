@@ -45,10 +45,10 @@ public class NameFragment extends Fragment implements OnBackPressedListener  {
         btnNext = root.findViewById(R.id.btn_join_name);
 
         //삭제
-        etSchool.setText("길동대학교");
-        etName.setText("홍길동");
-        etDepartment.setText("컴퓨터학과");
-        etNum.setText("20200001");
+        //etSchool.setText("길동대학교");
+        //etName.setText("홍길동");
+        //etDepartment.setText("컴퓨터학과");
+        //etNum.setText("20200001");
 
         //가입하기
         btnNext.setOnClickListener(new Button.OnClickListener() {
