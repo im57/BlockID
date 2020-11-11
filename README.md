@@ -18,6 +18,7 @@ DID기반의 학생증
 
 ### About APP
 
+<br>
 #### 시스템 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774265-0079a600-242e-11eb-9a86-8d460583f536.png)
 
@@ -33,25 +34,23 @@ DID기반의 학생증
   - 출석체크 응답 : DID 학생증 검증 완료 후 응답
 
 
+<br>
 #### 소프트웨어 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774466-6108e300-242e-11eb-9854-df8bb0faae90.png)
 
 
+<br>
 #### 서비스 흐름도
 ![image](https://user-images.githubusercontent.com/57435148/98774635-c1982000-242e-11eb-8bd8-3a1e7429a22b.png)
 
 
+<br>
 #### 메뉴 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774565-98778f80-242e-11eb-8076-8d004cc42f89.png)
 
 
+<br>
 #### ERD
 ![image](https://user-images.githubusercontent.com/57435148/98774771-08861580-242f-11eb-9836-c6fffe975309.png)
 
 
-#### 기능
-DID 기반의 학생증 발급
-
-QR코드 스캔으로 출석 체크
-
-블록체인과 DB 비교를 통한 투명한 출석 이력 조회
