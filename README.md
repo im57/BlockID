@@ -17,3 +17,17 @@ DID기반의 학생증
 ----
 
 ### About APP
+
+##### System Architecture
+![image](https://user-images.githubusercontent.com/57435148/98774265-0079a600-242e-11eb-9a86-8d460583f536.png)
+
+- 학생증 발행
+  - DID 학생증 발급 요청 : 학교 인증 완료한 사용자의 DID 학생증 발급 요청
+  - DID 학생증 발급 이력 저장 : 발급 이력 저장
+  - DID 학생증 스키마 저장 : 학생증 DID, verkey 스키마 저장
+  - DID 학생증 발급 응답 : 요청한 학생증 발급 완료 후 응답
+
+- 출석 검증
+  - 출석체크 요청 : 수업 QR코드 스캔 후 DID 학생증 검증 요청
+  - DID 학생증 검증 : DID 학생증 검증 후 응답
+  - 출석체크 응답 : DID 학생증 검증 완료 후 응답
