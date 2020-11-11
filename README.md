@@ -43,8 +43,9 @@ DID기반의 학생증
 
 <br>
 
-#### 서비스 흐름도
-![image](https://user-images.githubusercontent.com/57435148/98774635-c1982000-242e-11eb-8bd8-3a1e7429a22b.png)
+
+#### ERD
+![image](https://user-images.githubusercontent.com/57435148/98774771-08861580-242f-11eb-9836-c6fffe975309.png)
 
 
 <br>
@@ -55,7 +56,6 @@ DID기반의 학생증
 
 <br>
 
-#### ERD
-![image](https://user-images.githubusercontent.com/57435148/98774771-08861580-242f-11eb-9836-c6fffe975309.png)
 
-
+#### 서비스 흐름도
+![image](https://user-images.githubusercontent.com/57435148/98774635-c1982000-242e-11eb-8bd8-3a1e7429a22b.png)
