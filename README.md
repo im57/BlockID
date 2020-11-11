@@ -19,6 +19,7 @@ DID기반의 학생증
 ### About APP
 
 <br>
+
 #### 시스템 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774265-0079a600-242e-11eb-9a86-8d460583f536.png)
 
@@ -35,21 +36,25 @@ DID기반의 학생증
 
 
 <br>
+
 #### 소프트웨어 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774466-6108e300-242e-11eb-9854-df8bb0faae90.png)
 
 
 <br>
+
 #### 서비스 흐름도
 ![image](https://user-images.githubusercontent.com/57435148/98774635-c1982000-242e-11eb-8bd8-3a1e7429a22b.png)
 
 
 <br>
+
 #### 메뉴 구성도
 ![image](https://user-images.githubusercontent.com/57435148/98774565-98778f80-242e-11eb-8076-8d004cc42f89.png)
 
 
 <br>
+
 #### ERD
 ![image](https://user-images.githubusercontent.com/57435148/98774771-08861580-242f-11eb-9836-c6fffe975309.png)
 
